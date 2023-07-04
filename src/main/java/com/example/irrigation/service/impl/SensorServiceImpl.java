@@ -7,6 +7,7 @@ import com.example.irrigation.service.dao.SensorDao;
 import com.example.irrigation.service.entity.Plot;
 import com.example.irrigation.service.entity.Sensor;
 import com.example.irrigation.service.exception.ResourceNotFoundException;
+import com.example.irrigation.service.util.ApiFetchCountSingleton;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,9 @@ public class SensorServiceImpl implements SensorService {
     private final SensorDao sensorDao;
     @Autowired
     private final PlotDao plotDao;
+
+    public static ApiFetchCountSingleton singleton = ApiFetchCountSingleton.getInstance(); // get Class Instance
+
 
     @Override
     public Sensor editSensor(Sensor sensor) {
@@ -59,8 +63,39 @@ public class SensorServiceImpl implements SensorService {
         return true;
     }
 
+    public ApiFetchCountSingleton getSingleton() {
+        return singleton;
+    }
+
+    public void setSingleton(ApiFetchCountSingleton singleton) {
+        this.singleton = singleton;
+    }
+
     @Override
     public boolean getSensorStatus(Integer id) {
-        return sensorDao.findStatusById(id).orElseThrow(() -> new ResourceNotFoundException("sensor with id " + id + ",not found"));
+        Boolean status = sensorDao.findStatusById(id).orElseThrow(() -> new ResourceNotFoundException("sensor with id " + id + ",not found"));
+        int fetchCount = singleton.getFetchCount();
+
+        if(status)
+            singleton.setFetchCount(0);
+        else
+            singleton.setFetchCount(fetchCount + 1);
+        return status;
+    }
+
+    @Override
+    public boolean resumeSensor(Integer id) {
+        Sensor sensor = sensorDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("sensor with id " + id + ",not found"));
+        sensor.setState(true);
+        sensorDao.update(sensor);
+        return true;
+    }
+
+    @Override
+    public boolean pauseSensor(Integer id) {
+        Sensor sensor = sensorDao.findById(id).orElseThrow(() -> new ResourceNotFoundException("sensor with id " + id + ",not found"));
+        sensor.setState(false);
+        sensorDao.update(sensor);
+        return false;
     }
 }

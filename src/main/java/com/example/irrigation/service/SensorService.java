@@ -13,4 +13,8 @@ public interface SensorService {
     public Sensor getSensorByID(Integer id);
     public boolean addPlotToSensor(ConfigurationPlotWithSensorDto configurationPlotWithSensorDto);
     public boolean getSensorStatus(Integer id);
+
+    boolean resumeSensor(Integer id);
+
+    boolean pauseSensor(Integer id);
 }

@@ -35,7 +35,7 @@ public class IrrigationApplication {
 			Plot plot1 = new Plot(10002, 20.0, 5, false);
 			Plot plot2 = new Plot(10003, 30.0, 10, false);
 
-			Sensor sensor = new Sensor(10001, true, 3.0);
+			Sensor sensor = new Sensor(10001, false, 3.0);
 			Sensor sensor1 = new Sensor(10002, true, 2.0);
 
 

@@ -65,4 +65,16 @@ public class SensorController {
         return  new ResponseEntity<>(state, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}/pause")
+    public ResponseEntity<?> pauseSensor(@PathVariable("id") Integer id){
+        boolean state = sensorService.pauseSensor(id);
+        return  new ResponseEntity<>(state, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/resume")
+    public ResponseEntity<?> resumeSensor(@PathVariable("id") Integer id){
+        boolean state = sensorService.resumeSensor(id);
+        return  new ResponseEntity<>(state, HttpStatus.OK);
+    }
+
 }
