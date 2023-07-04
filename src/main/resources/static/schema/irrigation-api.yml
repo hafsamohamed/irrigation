@@ -1,0 +1,171 @@
+#openapi: 3.0.3
+#info:
+#  version: 1.0.3
+#  title: irrigation system API
+#  description: <p>irrigation API</p>
+#
+#paths:
+#  /:
+#    get:
+#      summary: Returns API version and build info.
+#      tags:
+#        - Health Check
+#      operationId: apiRoot
+#      responses:
+#        "200":
+#          description: Successful operation.
+#          content:
+#            application/json:
+#              schema:
+#                type: string
+#                example:
+#                  this is an example
+#
+#
+#  /plotEntities:
+#    get:
+#      tags:
+#        - Constellation CIM
+#      summary: "Find Plot Entities"
+#      operationId: "findPlotEntities"
+#      description:  Returns all plots
+#      responses:
+#        "200":
+#          description: "Successful operation. Content includes created with location header"
+#          content:
+#            application/json:
+#              schema:
+#                type: string
+#        "400":
+#          description: "Bad request"
+#          content:
+#            application/json:
+#              schema:
+#                type: string
+##    post:
+##      tags:
+##        - Constellation CIM
+##      summary: "Add a CIM Entity into the Catalog"
+##      description: Add Tables/Column in Data Processed CIM (RAW-CIM) domain only.
+##      operationId: "addCIMMetadataObject"
+##      requestBody:
+##        description: "CIM Metadata object that needs to be added to the Catalog"
+##        required: true
+##        content:
+##          application/json:
+##            schema:
+##              $ref: "#/components/schemas/ModelMetadataEntity"
+##      responses:
+##        "201":
+##          description: "Successful operation"
+##          content:
+##            application/json:
+##              schema:
+##                type: string
+##        "400":
+##          description: "Bad request"
+##          content:
+##            application/json:
+##              schema:
+##                type: string
+##
+##  /cimEntities/{entityId}:
+##    patch:
+##      tags:
+##        - Constellation CIM
+##      summary: "Updates a CIM Entity in the catalog"
+##      description: Updates Tables/Column in Data Processed CIM (RAW-CIM) domain only
+##      operationId: "updateCIMEntity"
+##      requestBody:
+##        description: "CIM Metadata object that needs to be added to the Catalog"
+##        required: true
+##        content:
+##          application/json:
+##            schema:
+##              $ref: "#/components/schemas/ModelMetadataEntity"
+##      parameters:
+##        - $ref: '#/components/parameters/entityIdPathParam'
+##      responses:
+##        "200":
+##          description: "Successful operation"
+##          content:
+##            application/json:
+##              schema:
+##                type: string
+##        "400":
+##          description: "Invalid ID supplied"
+##        "404":
+##          description: "CIM Entity not found"
+##
+##
+##  parameters:
+##    rawFeedId:
+##      name: rawFeedId
+##      in: path
+##      description: ID of the entity to return
+##      required: true
+##      schema:
+##        type: string
+##    opCoParam:
+##      name: opCo
+##      in: query
+##      description: Operating Company name
+##      required: true
+##      schema:
+##        $ref: '#/components/schemas/OpCo'
+##    queryParamsParam:
+##      name: queryParams
+##      in: query
+##      description: Optional list of query parameters and values, e.g. description:my desc;rawFormat:CSV;dateEffectiveSince:02/02/2021. If not present, acts as findAll. If query is intended for columns, the prefix "schema." needs to be added. Eg. schema.description:value
+##      required: false
+##      schema:
+##        type: string
+##    filterParamsParam:
+##      name: filterParams
+##      in: query
+##      description: List of filter parameters, e.g. description;rawFormat;processedFormat;language. If not present, returns all attributes.
+##      required: false
+##      schema:
+##        type: string
+##    entityIdPathParam:
+##      name: entityId
+##      in: path
+##      description: ID of Entity to return
+##      required: true
+##      schema:
+##        type: string
+##    domainLayerParam:
+##      name: domainLayer
+##      in: query
+##      description: domain (Physical, Logical, On-prem live, On-prem non-live)
+##      required: true
+##      schema:
+##        $ref: '#/components/schemas/DomainLayer'
+##    lineageIdParam:
+##      name: id
+##      in: query
+##      description: ID of the lineage relationship; this is an exact match search
+##      required: false
+##      schema:
+##        type: string
+##    domainName:
+##      name: domainName
+##      in: query
+##      description: Collibra target domain name
+##      required: false
+##      schema:
+##        type: string
+##    assetType:
+##      name: assetType
+##      in: query
+##      description: Target asset type
+##      required: false
+##      schema:
+##        type: string
+##    relationshipTypeParam:
+##      name: relationshipType
+##      in: query
+##      description: The value to apply to the filter_type; on its own this is a find all search.
+##      required: false
+##      schema:
+##        $ref: '#/components/schemas/RelationshipType'
